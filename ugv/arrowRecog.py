@@ -1,10 +1,12 @@
 #!/usr/bin/env python
+import cv2
+import numpy as np
 
 def direcao_seta(localinfo):
     '''
     Simple intro to OpenCv's HoughLines by detecting arrows.
     '''
-    
+     
     edges = cv2.Canny(localinfo,50,150,apertureSize = 3)
     #perform HoughLines on the image
     lines = cv2.HoughLines(edges,1,np.pi/180,20)
