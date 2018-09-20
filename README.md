@@ -1,2 +1,2 @@
-# tcc
+# TCC
 TCC - Lucas Perez
