@@ -46,3 +46,5 @@ def direcao_seta(localinfo):
         return("up")
     elif down[0] >= 1 and down[1] >= 1:
         return("down")
+    else:
+        return None
