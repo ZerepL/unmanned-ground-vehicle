@@ -75,15 +75,14 @@ class findObj():
     def extracao(img1, high=None):
         '''Extrai as coordenadas do objeto'''
         height, width = img1.shape[:2]
-
+        limpo = np.int32([[0, 0], [0, 0]])
+        limpoinfo = np.int32([[0, 0], [0, 0]])
         if high is not None:
             corners = np.float32([[0, 0], [width, 0], [width, height], [0, height]])
             corners = np.int32(
                 cv.perspectiveTransform(corners.reshape(1, -1, 2), high).reshape(-1, 2) + (width, 0) 
             )
             limpo = corners
-            limpoinfo = np.float32([[0, 0], [0, 0]])
-            limpoinfo = np.int32([[0, 0], [0, 0]])
             limpo[0][0] = limpo[0][0] - width
             limpo[1][0] = limpo[1][0] - width
             limpo[2][0] = limpo[2][0] - width
@@ -100,13 +99,13 @@ def main(name, img1, img2):
     
     detector, matcher = findObj.init_feature(name)
 
-    if img1 is None:
-        print('Find_obj=Failed to load fn1:', img1)
-        sys.exit(1)
+    # if img1 is None:
+    #     print('Find_obj=Failed to load fn1:', img1)
+    #     sys.exit(1)
 
-    if img2 is None:
-        print('Find_obj=Failed to load fn2:', img2)
-        sys.exit(1)
+    # if img2 is None:
+    #     print('Find_obj=Failed to load fn2:', img2)
+    #     sys.exit(1)
 
     if detector is None:
         print('find_obj=unknown feature:', name)
