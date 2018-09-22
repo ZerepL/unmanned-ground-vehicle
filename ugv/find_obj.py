@@ -15,16 +15,18 @@ from __future__ import print_function
 
 import numpy as np
 import cv2 as cv
-from common import anorm, getsize
-
+import sys
 
 class findObj():
     '''Classe que encontra informacoes sobre a localizacao de uim objeto'''
-    def init_feature(self, name):
-        FLANN_INDEX_KDTREE = 1  # bug: flann enums are missing
-        FLANN_INDEX_LSH    = 6
+    def init_feature(name):
         '''Inicializa a classe quanto aos argumentos'''
+        
+        flann_index_kdtree = 1  # bug: flann enums are missing
+        flann_index_lsh = 6
+
         chunks = name.split('-')
+
         if chunks[0] == 'sift':
             detector = cv.xfeatures2d.SIFT_create()
             norm = cv.NORM_L2
@@ -44,51 +46,89 @@ class findObj():
             return None, None
         if 'flann' in chunks:
             if norm == cv.NORM_L2:
-                flann_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
+                flann_params = dict(algorithm=flann_index_kdtree, trees=5)
             else:
-                flann_params= dict(algorithm = FLANN_INDEX_LSH,
-                                table_number = 6, # 12
-                                key_size = 12,     # 20
-                                multi_probe_level = 1) #2
+                flann_params = dict(
+                    algorithm=flann_index_lsh,
+                    table_number=6, # 12
+                    key_size=12,     # 20
+                    multi_probe_level=1
+                ) #2
             matcher = cv.FlannBasedMatcher(flann_params, {})  # bug : need to pass empty dict (#1329)
         else:
             matcher = cv.BFMatcher(norm)
         return detector, matcher
 
 
-    def filter_matches(self, kp1, kp2, matches, ratio = 0.75):
+    def filter_matches(kp1, kp2, matches, ratio=0.75):
         '''Aplica filtros para localizacao'''
         mkp1, mkp2 = [], []
-        for m in matches:
-            if len(m) == 2 and m[0].distance < m[1].distance * ratio:
-                m = m[0]
-                mkp1.append( kp1[m.queryIdx] )
-                mkp2.append( kp2[m.trainIdx] )
-        p1 = np.float32([kp.pt for kp in mkp1])
-        p2 = np.float32([kp.pt for kp in mkp2])
-        kp_pairs = zip(mkp1, mkp2)
-        return p1, p2
+        for item in matches:
+            if len(item) == 2 and item[0].distance < item[1].distance * ratio:
+                item = item[0]
+                mkp1.append(kp1[item.queryIdx])
+                mkp2.append(kp2[item.trainIdx])
+        point1 = np.float32([kp.pt for kp in mkp1])
+        point2 = np.float32([kp.pt for kp in mkp2])
+        return point1, point2
 
-    def extracao(self, img1, H = None):
+    def extracao(img1, high=None):
         '''Extrai as coordenadas do objeto'''
-        h1, w1 = img1.shape[:2]
+        height, width = img1.shape[:2]
 
-        if H is not None:
-            corners = np.float32([[0, 0], [w1, 0], [w1, h1], [0, h1]])
-            corners = np.int32( 
-                cv.perspectiveTransform(corners.reshape(1, -1, 2), H).reshape(-1, 2) + (w1, 0) 
+        if high is not None:
+            corners = np.float32([[0, 0], [width, 0], [width, height], [0, height]])
+            corners = np.int32(
+                cv.perspectiveTransform(corners.reshape(1, -1, 2), high).reshape(-1, 2) + (width, 0) 
             )
             limpo = corners
             limpoinfo = np.float32([[0, 0], [0, 0]])
             limpoinfo = np.int32([[0, 0], [0, 0]])
-            limpo[0][0] = limpo[0][0] - w1
-            limpo[1][0] = limpo[1][0] - w1
-            limpo[2][0] = limpo[2][0] - w1
-            limpo[3][0] = limpo[3][0] - w1
+            limpo[0][0] = limpo[0][0] - width
+            limpo[1][0] = limpo[1][0] - width
+            limpo[2][0] = limpo[2][0] - width
+            limpo[3][0] = limpo[3][0] - width
             limpoinfo[0][0] = limpo[0][0] + 8
             limpoinfo[0][1] = limpo[0][1] + 16
             limpoinfo[1][0] = limpo[2][0] - 8
             limpoinfo[1][1] = limpo[2][1] - 16
 
         return limpo, limpoinfo
-        
+
+def main(name, img1, img2):
+    '''Prepara variaveis e valores'''
+    
+    detector, matcher = findObj.init_feature(name)
+
+    if img1 is None:
+        print('Find_obj=Failed to load fn1:', img1)
+        sys.exit(1)
+
+    if img2 is None:
+        print('Find_obj=Failed to load fn2:', img2)
+        sys.exit(1)
+
+    if detector is None:
+        print('find_obj=unknown feature:', name)
+        sys.exit(1)
+
+
+    kp1, desc1 = detector.detectAndCompute(img1, None)
+    kp2, desc2 = detector.detectAndCompute(img2, None)
+    #print('img1 - %d features, img2 - %d features' % (len(kp1), len(kp2)))
+
+    def match_and_draw():
+        #print('matching...')
+        raw_matches = matcher.knnMatch(desc1, trainDescriptors = desc2, k = 2) #2
+        p1, p2 = findObj.filter_matches(kp1, kp2, raw_matches)
+        if len(p1) >= 4:
+            H, status = cv.findHomography(p1, p2, cv.RANSAC, 5.0)
+            #print('%d / %d  inliers/matched' % (np.sum(status), len(status)))
+        else:
+            H, status = None, None
+            #print('%d matches found, not enough for homography estimation' % len(p1))
+
+        return findObj.extracao(img1, H)
+
+
+    return match_and_draw()

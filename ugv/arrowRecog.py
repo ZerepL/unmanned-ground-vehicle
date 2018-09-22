@@ -2,12 +2,11 @@
 import cv2
 import numpy as np
 
-def direcao_seta(localinfo):
+def direcao_seta(img):
     '''
     Simple intro to OpenCv's HoughLines by detecting arrows.
     '''
-     
-    edges = cv2.Canny(localinfo,50,150,apertureSize = 3)
+    edges = cv2.Canny(img,50,150,apertureSize = 3)
     #perform HoughLines on the image
     lines = cv2.HoughLines(edges,1,np.pi/180,20)
     #create an array for each direction, where array[0] indicates one of the lines and array[1] indicates the other, which if both > 0 will tell us the orientation
@@ -15,6 +14,7 @@ def direcao_seta(localinfo):
     right = [0, 0]
     up = [0, 0]
     down = [0, 0]
+    
     #iterate through the lines that the houghlines function returned
     for object in lines:
         theta = object[0][1]
