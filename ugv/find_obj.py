@@ -70,7 +70,8 @@ class findObj():
                 mkp2.append(kp2[item.trainIdx])
         point1 = np.float32([kp.pt for kp in mkp1])
         point2 = np.float32([kp.pt for kp in mkp2])
-        return point1, point2
+        kp_pairs = zip(mkp1, mkp2)
+        return point1, point2, list(kp_pairs)
 
     def extracao(img1, high=None):
         '''Extrai as coordenadas do objeto'''
@@ -119,13 +120,13 @@ def main(name, img1, img2):
     def match_and_draw():
         #print('matching...')
         raw_matches = matcher.knnMatch(desc1, trainDescriptors = desc2, k = 2) #2
-        p1, p2 = findObj.filter_matches(kp1, kp2, raw_matches)
+        p1, p2, kp_pairs = findObj.filter_matches(kp1, kp2, raw_matches)
         if len(p1) >= 4:
             H, status = cv.findHomography(p1, p2, cv.RANSAC, 5.0)
-            #print('%d / %d  inliers/matched' % (np.sum(status), len(status)))
+            print('%d / %d  inliers/matched' % (np.sum(status), len(status)))
         else:
             H, status = None, None
-            #print('%d matches found, not enough for homography estimation' % len(p1))
+            print('%d matches found, not enough for homography estimation' % len(p1))
 
         return findObj.extracao(img1, H)
 
