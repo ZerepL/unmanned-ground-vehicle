@@ -16,5 +16,11 @@ def tirafoto():
 	camera.capture(rawCapture, format="bgr")
 	return rawCapture.array
 
- 
+def salvarFoto():
+	camera.start_preview()
+	time.sleep(20)
+	camera.capture("foto.jpg", resize=(320,240)) 
+	camera.stop_preview()
+
+salvarFoto()
 
