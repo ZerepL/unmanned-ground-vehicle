@@ -2,18 +2,18 @@ import find_obj
 import sys, getopt
 import cv2 as cv
 import arrowRecog
-#import camera
-#import motores
+import camera
+import motores
 import time
 import squares
 
 find = find_obj
-# # cam = camera
+cam = camera
 
-# # picExt = cam.tirafoto()
-# # cv.imshow('image', picExt)
-# # cv.waitKey(0)
-# # cv.destroyAllWindows()
+picExt = cam.tirafoto()
+cv.imshow('image', picExt)
+cv.waitKey(0)
+cv.destroyAllWindows()
 
 opts, args = getopt.getopt(sys.argv[1:], '', ['feature='])
 opts = dict(opts)
@@ -25,7 +25,8 @@ except:
     sys.exit(1)
 
 img1 = cv.imread(fn1, 0)
-img2 = cv.imread(fn2, 0)
+#img2 = cv.imread(fn2, 0)
+img2 = cv.cvtColor(picExt, cv.COLOR_BGR2GRAY)
 
 if img1 is None:
     print('Failed to load fn1:', fn1)
@@ -35,7 +36,7 @@ if img2 is None:
     print('Failed to load fn2:', fn2)
     sys.exit(1)
 
-# #img2 = cv.cvtColor(picExt, cv.COLOR_BGR2GRAY)
+
 # print('---------------------------------------------------------')
 # print("Procurando por padrao")
 limpo, limpoinfo = find.main('sift', img1, img2)

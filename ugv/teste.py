@@ -179,7 +179,6 @@ if __name__ == '__main__':
             H, status = None, None
             print('%d matches found, not enough for homography estimation' % len(p1))
 
-        print(kp_pairs)
         _vis = explore_match(win, img1, img2, kp_pairs, status, H)
 
 
