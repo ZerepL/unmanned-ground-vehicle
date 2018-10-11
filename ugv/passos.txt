@@ -1,6 +1,0 @@
-1 - Tirar foto
-2 - Procurar por placa
-3 - if (placa == true, (4),(1))
-4 - Localizar placa
-5 - Retirar informações da placa
-6 - Acionar os motores
