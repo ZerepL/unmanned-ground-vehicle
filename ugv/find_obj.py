@@ -87,16 +87,12 @@ class findObj():
             limpo[1][0] = limpo[1][0] - width
             limpo[2][0] = limpo[2][0] - width
             limpo[3][0] = limpo[3][0] - width
-            limpoinfo[0][0] = limpo[0][0] + 8
-            limpoinfo[0][1] = limpo[0][1] + 16
-            limpoinfo[1][0] = limpo[2][0] - 8
-            limpoinfo[1][1] = limpo[2][1] - 16
 
-        return limpo, limpoinfo
+        return limpo
 
 def main(name, img1, img2):
     '''Prepara variaveis e valores'''
-    
+    null = np.int32([[0, 0], [0, 0]])
     detector, matcher = findObj.init_feature(name)
 
     # if img1 is None:
@@ -114,19 +110,20 @@ def main(name, img1, img2):
 
     kp1, desc1 = detector.detectAndCompute(img1, None)
     kp2, desc2 = detector.detectAndCompute(img2, None)
+    null[0][0] = -999
     #print('img1 - %d features, img2 - %d features' % (len(kp1), len(kp2)))
 
     def match_and_draw():
         #print('matching...')
         raw_matches = matcher.knnMatch(desc1, trainDescriptors = desc2, k = 2) #2
         p1, p2 = findObj.filter_matches(kp1, kp2, raw_matches)
-        if len(p1) >= 4:
+        if len(p1) >= 12:
             H, status = cv.findHomography(p1, p2, cv.RANSAC, 5.0)
             print('%d / %d  inliers/matched' % (np.sum(status), len(status)))
         else:
             H, status = None, None
             print('%d matches found, not enough for homography estimation' % len(p1))
-
+            return null
         return findObj.extracao(img1, H)
 
 

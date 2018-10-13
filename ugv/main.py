@@ -1,58 +1,57 @@
 import find_obj
-import sys, getopt
+import sys
 import cv2 as cv
-import arrowRecog
 import camera
 import motores
-import time
-import squares
 
 find = find_obj
 cam = camera
 
+img1 = './BaseD.jpg'
+esquerda = './esquerda.jpg'
+direita = './direita.jpg'
+chegou = './chegou.jpg'
+
 picExt = cam.tirafoto()
-cv.imshow('image', picExt)
-cv.waitKey(0)
-cv.destroyAllWindows()
 
-opts, args = getopt.getopt(sys.argv[1:], '', ['feature='])
-opts = dict(opts)
-feature_name = opts.get('--feature', 'brisk')
-try:
-    fn1, fn2 = args
-except:
-    print('falha na importacao das imagens')
-    sys.exit(1)
-
-img1 = cv.imread(fn1, 0)
-#img2 = cv.imread(fn2, 0)
+img1 = cv.imread(img1, 0)
+esquerda = cv.imread(esquerda, 0)
+direita = cv.imread(direita, 0)
+chegou = cv.imread(chegou, 0)
 img2 = cv.cvtColor(picExt, cv.COLOR_BGR2GRAY)
 
-if img1 is None:
-    print('Failed to load fn1:', fn1)
-    sys.exit(1)
-
-if img2 is None:
-    print('Failed to load fn2:', fn2)
-    sys.exit(1)
-
-
-# print('---------------------------------------------------------')
-# print("Procurando por padrao")
-limpo, limpoinfo = find.main('sift', img1, img2)
-
-if (limpo[0][0]==limpoinfo[0][0]).all():
-    sys.exit(1)
+busca = find.main('sift', img1, img2)
+height, width = img2.shape[:2]
+if busca[0][0] == -999:
+    print("Nada encontrado")
+    sys.exit(1) 
 else:
     print("Padrao encontrado")
-    print(limpoinfo)
-    crop_img = img2[(limpo[0][1]-5):(limpo[2][1]), (limpo[0][0]):(limpo[2][0])]
+    print(busca)
+    crop_img = img2[busca[0][1]:busca[2][1], busca[0][0]:busca[2][0]]
 
-cv.imshow('image', crop_img)
-cv.waitKey(0)
-cv.destroyAllWindows()
+busca[0][0] = -999
+direcao = ''
+x = 0
+while(busca[0][0] == -999):
 
+    if(x == 0):
+        busca = find.main('sift', chegou, crop_img)
+        x = 1
+        direcao = 'chegou'
+    elif (x == 1):
+        busca = find.main('sift', direita, crop_img)
+        x = 2
+        direcao = 'direita'
+    elif (x == 2):
+        busca = find.main('sift', esquerda, crop_img)
+        x = 3
+        direcao = 'esquerda'
+    elif (x == 3):
+        print('Direcao nao encontrada')
+        sys.exit(1)
 
+print(direcao)
 
 
 

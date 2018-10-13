@@ -22,5 +22,5 @@ def salvarFoto():
 	camera.capture("foto.jpg", resize=(320,240)) 
 	camera.stop_preview()
 
-salvarFoto()
+
 
