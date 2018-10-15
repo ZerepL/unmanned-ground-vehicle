@@ -19,7 +19,7 @@ def tirafoto():
 def salvarFoto():
 	camera.start_preview()
 	time.sleep(20)
-	camera.capture("foto.jpg", resize=(320,240)) 
+	camera.capture("foto.jpg", resize=(1080,720)) 
 	camera.stop_preview()
 
 

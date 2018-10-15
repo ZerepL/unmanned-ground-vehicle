@@ -8,6 +8,11 @@ io.setup(38,io.OUT)
 io.setup(37,io.OUT)
 io.setup(36,io.OUT)
 io.setup(35,io.OUT)
+io.setup(12,io.IN)
+io.setup(11,io.IN)
+io.setup(15,io.IN)
+io.setup(13,io.IN)
+io.setup(16,io.IN)
 
 pwmIn1 = io.PWM(38, 100)
 pwmIn2 = io.PWM(37, 100)
@@ -63,6 +68,18 @@ def virar(direcao):
         io.cleanup()
 
 def lerlinhas():
+    #for x in range(0,100):
+    #    pwmIn1.ChangeDutyCycle(x)
+    #    time.sleep(0.05)
     for x in range(0,100):
-        pwmIn1.ChangeDutyCycle(x)
+        pwmIn4.ChangeDutyCycle(x)
         time.sleep(0.05)
+
+def lerSensores():
+    while(True):
+        seEE = io.input(12)
+        seEe = io.input(11)
+        seM = io.input(13)
+        seDd = io.input(15)
+        seDD = io.input(16)
+        print("%d - %d - %d - %d - %d" % (seEE, seEe, seM, seDd, seDD))
