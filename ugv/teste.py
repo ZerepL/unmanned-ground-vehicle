@@ -1,4 +1,5 @@
 import camera
+import motores
 
-camera.salvarFoto()
-
+# camera.salvarFoto()
+motores.lerlinhas()
