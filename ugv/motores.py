@@ -68,12 +68,37 @@ def virar(direcao):
         io.cleanup()
 
 def lerlinhas():
-    #for x in range(0,100):
-    #    pwmIn1.ChangeDutyCycle(x)
-    #    time.sleep(0.05)
-    for x in range(0,100):
-        pwmIn4.ChangeDutyCycle(x)
-        time.sleep(0.05)
+    error = 0
+
+    while(error != -999):
+        seEE = io.input(12)
+        seEe = io.input(11)
+        seM = io.input(13)
+        seDd = io.input(15)
+        seDD = io.input(16)
+
+        if(seEE == 0 and seEe == 1 and seM == 1 and seDd == 1 and seDD == 1):
+            error = -4
+        elif(seEE == 0 and seEe == 0 and seM == 1 and seDd == 1 and seDD == 1):
+            error = -3
+        elif(seEE == 1 and seEe == 0 and seM == 1 and seDd == 1 and seDD == 1):
+            error = -2
+        elif(seEE == 1 and seEe == 0 and seM == 0 and seDd == 1 and seDD == 1):
+            error = -1
+        elif(seEE == 1 and seEe == 1 and seM == 0 and seDd == 1 and seDD == 1):
+            error = 0
+        elif(seEE == 1 and seEe == 1 and seM == 0 and seDd == 0 and seDD == 1):
+            error = 1
+        elif(seEE == 1 and seEe == 1 and seM == 1 and seDd == 0 and seDD == 1):
+            error = 2
+        elif(seEE == 1 and seEe == 1 and seM == 1 and seDd == 0 and seDD == 0):
+            error = 3
+        elif(seEE == 1 and seEe == 1 and seM == 1 and seDd == 1 and seDD == 0):
+            error = 4
+        elif(seEE == 1 and seEe == 1 and seM == 1 and seDd == 1 and seDD == 1):
+            error = -999
+        
+        print(error)
 
 def lerSensores():
     while(True):
