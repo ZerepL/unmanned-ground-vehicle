@@ -27,8 +27,8 @@ def virar(direcao):
     if direcao == "esquerda":
         io.output(38,1)
         io.output(37,0)
-        io.output(35,0)
-        io.output(36,1)
+        io.output(36,0)
+        io.output(35,1)
         time.sleep(1)
         io.output(38,0)
         io.output(36,0)
@@ -97,8 +97,34 @@ def lerlinhas():
             error = 4
         elif(seEE == 0 and seEe == 0 and seM == 0 and seDd == 0 and seDD == 0):
             error = -999
-        
-        print(error)
+
+        if(error == -4):
+            pwmIn1.ChangeDutyCycle(100)
+            pwmIn4.ChangeDutyCycle(40)
+        elif(error == -3):
+            pwmIn1.ChangeDutyCycle(100)
+            pwmIn4.ChangeDutyCycle(60)
+        elif(error == -2):
+            pwmIn1.ChangeDutyCycle(100)
+            pwmIn4.ChangeDutyCycle(80)
+        elif(error == -1):
+            pwmIn1.ChangeDutyCycle(100)
+            pwmIn4.ChangeDutyCycle(90)
+        elif(error == 0):
+            pwmIn1.ChangeDutyCycle(100)
+            pwmIn4.ChangeDutyCycle(100)
+        elif(error == 1):
+            pwmIn1.ChangeDutyCycle(90)
+            pwmIn4.ChangeDutyCycle(100)
+        elif(error == 2):
+            pwmIn1.ChangeDutyCycle(80)
+            pwmIn4.ChangeDutyCycle(100)
+        elif(error == 3):
+            pwmIn1.ChangeDutyCycle(60)
+            pwmIn4.ChangeDutyCycle(100)
+        elif(error == 4):
+            pwmIn1.ChangeDutyCycle(40)
+            pwmIn4.ChangeDutyCycle(100)
 
 def lerSensores():
     while(True):
