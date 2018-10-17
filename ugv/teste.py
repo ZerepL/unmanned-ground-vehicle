@@ -3,4 +3,4 @@ import motores
 
 # camera.salvarFoto()
 
-motores.lerSensores()
+motores.lerlinhas()

@@ -95,7 +95,7 @@ def lerlinhas():
             error = 3
         elif(seEE == 1 and seEe == 1 and seM == 1 and seDd == 1 and seDD == 0):
             error = 4
-        elif(seEE == 1 and seEe == 1 and seM == 1 and seDd == 1 and seDD == 1):
+        elif(seEE == 0 and seEe == 0 and seM == 0 and seDd == 0 and seDD == 0):
             error = -999
         
         print(error)
