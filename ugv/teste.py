@@ -23,10 +23,10 @@ def converte(path):
 
 graph = dijsktra.Graph([])
 graph.add_edge("a", "b", 4)
-graph.add_edge("a", "c", 1)
-graph.add_edge("b", "c", 5)
-graph.add_edge("b", "d", 1)
-graph.add_edge("c", "d", 1)
+# graph.add_edge("a", "c", 1)
+# graph.add_edge("b", "c", 5)
+# graph.add_edge("b", "d", 1)
+# graph.add_edge("c", "d", 1)
 
 path =(graph.dijkstra("a", "b"))
 path_refina = converte(path)
