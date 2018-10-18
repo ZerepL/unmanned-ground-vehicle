@@ -51,7 +51,7 @@ def virar(direcao):
         pwmIn3.ChangeDutyCycle(0)
         pwmIn4.ChangeDutyCycle(0)
 
-    elif direcao == "tras":
+    elif direcao == "nada":
         pwmIn2.ChangeDutyCycle(100)
         pwmIn3.ChangeDutyCycle(100)
         time.sleep(1)

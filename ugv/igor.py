@@ -1,3 +1,0 @@
-import camera
-
-camera.salvarFoto()
