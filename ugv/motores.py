@@ -25,44 +25,38 @@ pwmIn4.start(0)
 
 def virar(direcao):
     if direcao == "esquerda":
-        io.output(38,1)
-        io.output(37,0)
-        io.output(36,0)
-        io.output(35,1)
+        pwmIn2.ChangeDutyCycle(100)
+        pwmIn4.ChangeDutyCycle(100)
         time.sleep(1)
-        io.output(38,0)
-        io.output(36,0)
-        io.cleanup()
+        pwmIn2.ChangeDutyCycle(0)
+        pwmIn4.ChangeDutyCycle(0)
 
     elif direcao == "direita":
-        io.output(38,0)
-        io.output(37,1)
-        io.output(35,1)
-        io.output(36,0)
+        pwmIn1.ChangeDutyCycle(100)
+        pwmIn3.ChangeDutyCycle(100)
         time.sleep(1)
-        io.output(37,0)
-        io.output(36,0)
-        io.cleanup()
+        pwmIn1.ChangeDutyCycle(0)
+        pwmIn3.ChangeDutyCycle(0)
 
     elif direcao == "frente":
-        io.output(38,1)
-        io.output(37,0)
-        io.output(35,1)
-        io.output(36,0)
+        pwmIn1.ChangeDutyCycle(100)
+        pwmIn4.ChangeDutyCycle(100)
         time.sleep(1)
-        io.output(37,0)
-        io.output(36,0)
-        io.cleanup()
+        pwmIn1.ChangeDutyCycle(0)
+        pwmIn4.ChangeDutyCycle(0)
 
     elif direcao == "chegou":
-        io.output(38,0)
-        io.output(37,0)
-        io.output(35,0)
-        io.output(36,0)
+        pwmIn1.ChangeDutyCycle(0)
+        pwmIn2.ChangeDutyCycle(0)
+        pwmIn3.ChangeDutyCycle(0)
+        pwmIn4.ChangeDutyCycle(0)
+
+    elif direcao == "tras":
+        pwmIn2.ChangeDutyCycle(100)
+        pwmIn3.ChangeDutyCycle(100)
         time.sleep(1)
-        io.output(37,0)
-        io.output(36,0)
-        io.cleanup()
+        pwmIn2.ChangeDutyCycle(0)
+        pwmIn3.ChangeDutyCycle(0)
 
     else:
         io.cleanup()
