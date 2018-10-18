@@ -24,14 +24,14 @@ pwmIn3.start(0)
 pwmIn4.start(0)
 
 def virar(direcao):
-    if direcao == "esquerda":
+    if direcao == "direita":
         pwmIn2.ChangeDutyCycle(100)
         pwmIn4.ChangeDutyCycle(100)
         time.sleep(1)
         pwmIn2.ChangeDutyCycle(0)
         pwmIn4.ChangeDutyCycle(0)
 
-    elif direcao == "direita":
+    elif direcao == "esquerda":
         pwmIn1.ChangeDutyCycle(100)
         pwmIn3.ChangeDutyCycle(100)
         time.sleep(1)
@@ -91,35 +91,37 @@ def lerlinhas():
             error = 4
         elif(seEE == 0 and seEe == 0 and seM == 0 and seDd == 0 and seDD == 0):
             error = -999
+            pwmIn1.ChangeDutyCycle(0)
+            pwmIn4.ChangeDutyCycle(0)
 
         if(error == -4):
             pwmIn1.ChangeDutyCycle(100)
-            pwmIn4.ChangeDutyCycle(40)
+            pwmIn4.ChangeDutyCycle(10)
         elif(error == -3):
             pwmIn1.ChangeDutyCycle(100)
-            pwmIn4.ChangeDutyCycle(60)
+            pwmIn4.ChangeDutyCycle(30)
         elif(error == -2):
             pwmIn1.ChangeDutyCycle(100)
-            pwmIn4.ChangeDutyCycle(80)
+            pwmIn4.ChangeDutyCycle(60)
         elif(error == -1):
             pwmIn1.ChangeDutyCycle(100)
-            pwmIn4.ChangeDutyCycle(90)
+            pwmIn4.ChangeDutyCycle(85)
         elif(error == 0):
             pwmIn1.ChangeDutyCycle(100)
             pwmIn4.ChangeDutyCycle(100)
         elif(error == 1):
-            pwmIn1.ChangeDutyCycle(90)
+            pwmIn1.ChangeDutyCycle(85)
             pwmIn4.ChangeDutyCycle(100)
         elif(error == 2):
-            pwmIn1.ChangeDutyCycle(80)
-            pwmIn4.ChangeDutyCycle(100)
-        elif(error == 3):
             pwmIn1.ChangeDutyCycle(60)
             pwmIn4.ChangeDutyCycle(100)
-        elif(error == 4):
-            pwmIn1.ChangeDutyCycle(40)
+        elif(error == 3):
+            pwmIn1.ChangeDutyCycle(30)
             pwmIn4.ChangeDutyCycle(100)
-
+        elif(error == 4):
+            pwmIn1.ChangeDutyCycle(10)
+            pwmIn4.ChangeDutyCycle(100)
+        print(error)
 def lerSensores():
     while(True):
         seEE = io.input(12)
