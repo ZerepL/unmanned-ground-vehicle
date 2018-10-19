@@ -13,14 +13,17 @@ rawCapture = PiRGBArray(camera, size=(640, 480))
 time.sleep(0.2)
 
 def tirafoto():
-	camera.capture(rawCapture, format="bgr")
-	return rawCapture.array
+           
+    camera.capture(rawCapture, format="bgr")
+    image = rawCapture.array
+    rawCapture.truncate(0)
+    return image
 
 def salvarFoto():
-	camera.start_preview()
-	time.sleep(20)
-	camera.capture("foto.jpg", resize=(1080,720)) 
-	camera.stop_preview()
+    camera.start_preview()
+    time.sleep(20)
+    camera.capture("foto.jpg", resize=(1080,720)) 
+    camera.stop_preview()
 
 
 

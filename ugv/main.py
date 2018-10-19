@@ -4,6 +4,7 @@ import cv2 as cv
 import camera
 import motores
 import dijsktra
+import numpy as np
 
 find = find_obj
 cam = camera
@@ -48,21 +49,20 @@ def converte(path):
     return path_refinado
 
 path = (graph.dijkstra("d", "a"))
-print('Indo de %s para %s' % (path[0], path[(len(path)-1)])
+print('Indo de %s para %s' % (path[0], path[(len(path)-1)]))
 print('Por '.join(path))
 path_limpo = converte(path)
 y = 0
-ponto_atual = path_limpo[y]
+ponto_atual = path[y]
 
-while(ponto_atual != path_limpo[(len(path_limpo)-1)]):
+while True:
     print('Lendo linhas')
     motores.lerlinhas()
     print('Tirando foto')
-    y = 0
     picExt = cam.tirafoto()
     img2 = cv.cvtColor(picExt, cv.COLOR_BGR2GRAY)
-    print(path[0])
-    busca = find.main('sift', ponto_atual, img2) # <-------------------
+    print(path[y])
+    busca = find.main('sift', path_limpo[y], img2) # <-------------------
     if busca[0][0] == -999:
         print("Nada encontrado")
 
@@ -97,8 +97,16 @@ while(ponto_atual != path_limpo[(len(path_limpo)-1)]):
         elif (x == 4):
             print('Direcao nao encontrada')
             direcao = 'nada'
+            motores.virar(direcao)
+            x = 0
     motores.virar(direcao)
+    print(ponto_atual)
+    print(path_limpo[y])
     if direcao == 'chegou':
         print("Estacao %s alcancada" % (path[y]))
         y = y + 1
-        ponto_atual = path_limpo[y]
+        ponto_atual = path[y]
+
+        if (y > len(path)): 
+            print('Destino alcancado')
+            break
