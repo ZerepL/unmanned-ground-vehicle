@@ -48,8 +48,11 @@ def converte(path):
     return path_refinado
 
 path = (graph.dijkstra("d", "a"))
+print('Indo de %s para %s' % (path[0], path[(len(path)-1)])
+print('Por '.join(path))
 path_limpo = converte(path)
-ponto_atual = path_limpo[0]
+y = 0
+ponto_atual = path_limpo[y]
 
 while(ponto_atual != path_limpo[(len(path_limpo)-1)]):
     print('Lendo linhas')
@@ -72,6 +75,7 @@ while(ponto_atual != path_limpo[(len(path_limpo)-1)]):
     busca[0][0] = -999
     direcao = ''
     x = 0
+    print('Buscando direcao')
     while(busca[0][0] == -999):
 
         if(x == 0):
