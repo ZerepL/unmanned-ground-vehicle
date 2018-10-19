@@ -117,7 +117,7 @@ def main(name, img1, img2):
         #print('matching...')
         raw_matches = matcher.knnMatch(desc1, trainDescriptors = desc2, k = 2) #2
         p1, p2 = findObj.filter_matches(kp1, kp2, raw_matches)
-        if len(p1) >= 12:
+        if len(p1) >= 6:
             H, status = cv.findHomography(p1, p2, cv.RANSAC, 5.0)
             print('%d / %d  inliers/matched' % (np.sum(status), len(status)))
         else:

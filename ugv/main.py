@@ -18,7 +18,7 @@ chegou = './chegou.jpg'
 frente = './frente.jpg'
 
 graph = dijsktra.Graph([])
-graph.add_edge("a", "b", 4)
+graph.add_edge("a", "d", 4)
 # graph.add_edge("a", "c", 1)
 # graph.add_edge("b", "c", 5)
 # graph.add_edge("b", "d", 1)
@@ -32,10 +32,6 @@ esquerda = cv.imread(esquerda, 0)
 direita = cv.imread(direita, 0)
 chegou = cv.imread(chegou, 0)
 frente = cv.imread(frente, 0)
-
-path = (graph.dijkstra("a", "b"))
-path_limpo = converte(path)
-ponto_atual = path_limpo[0]
 
 def converte(path):
     path_refinado = []
@@ -51,14 +47,18 @@ def converte(path):
     
     return path_refinado
 
-while(ponto_atual != (len(path_limpo)-1)):
+path = (graph.dijkstra("d", "a"))
+path_limpo = converte(path)
+ponto_atual = path_limpo[0]
+
+while(ponto_atual != path_limpo[(len(path_limpo)-1)]):
     print('Lendo linhas')
     motores.lerlinhas()
     print('Tirando foto')
     y = 0
     picExt = cam.tirafoto()
     img2 = cv.cvtColor(picExt, cv.COLOR_BGR2GRAY)
-
+    print(path[0])
     busca = find.main('sift', ponto_atual, img2) # <-------------------
     if busca[0][0] == -999:
         print("Nada encontrado")

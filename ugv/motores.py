@@ -121,7 +121,7 @@ def lerlinhas():
         elif(error == 4):
             pwmIn1.ChangeDutyCycle(10)
             pwmIn4.ChangeDutyCycle(100)
-        print(error)
+        #print(error)
 def lerSensores():
     while(True):
         seEE = io.input(12)
