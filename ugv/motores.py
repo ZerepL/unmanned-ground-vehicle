@@ -27,16 +27,27 @@ def virar(direcao):
     if direcao == "direita":
         pwmIn2.ChangeDutyCycle(100)
         pwmIn4.ChangeDutyCycle(100)
+        time.sleep(1.8)
+        pwmIn2.ChangeDutyCycle(0)
+        pwmIn1.ChangeDutyCycle(100)
+        pwmIn4.ChangeDutyCycle(100)
         time.sleep(1)
+        pwmIn1.ChangeDutyCycle(0)
+        pwmIn4.ChangeDutyCycle(0)
         pwmIn2.ChangeDutyCycle(0)
         pwmIn4.ChangeDutyCycle(0)
 
     elif direcao == "esquerda":
         pwmIn1.ChangeDutyCycle(100)
         pwmIn3.ChangeDutyCycle(100)
-        time.sleep(1)
+        time.sleep(1.8)
+        pwmIn3.ChangeDutyCycle(0)
+        pwmIn1.ChangeDutyCycle(100)
+        pwmIn4.ChangeDutyCycle(100)
+        time.sleep(1)        
         pwmIn1.ChangeDutyCycle(0)
         pwmIn3.ChangeDutyCycle(0)
+        pwmIn4.ChangeDutyCycle(0)
 
     elif direcao == "frente":
         pwmIn1.ChangeDutyCycle(100)
@@ -92,34 +103,54 @@ def lerlinhas():
         elif(seEE == 0 and seEe == 0 and seM == 0 and seDd == 0 and seDD == 0):
             error = -999
             pwmIn1.ChangeDutyCycle(0)
+            pwmIn2.ChangeDutyCycle(0)
+            pwmIn3.ChangeDutyCycle(0)
             pwmIn4.ChangeDutyCycle(0)
 
         if(error == -4):
+            pwmIn4.ChangeDutyCycle(0)
+            pwmIn2.ChangeDutyCycle(0)
+            pwmIn3.ChangeDutyCycle(100)
             pwmIn1.ChangeDutyCycle(100)
-            pwmIn4.ChangeDutyCycle(10)
         elif(error == -3):
+            pwmIn2.ChangeDutyCycle(0)
+            pwmIn4.ChangeDutyCycle(0)
+            pwmIn1.ChangeDutyCycle(100)
+            pwmIn3.ChangeDutyCycle(80)
+        elif(error == -2):
+            pwmIn3.ChangeDutyCycle(0)
+            pwmIn2.ChangeDutyCycle(0)
             pwmIn1.ChangeDutyCycle(100)
             pwmIn4.ChangeDutyCycle(30)
-        elif(error == -2):
-            pwmIn1.ChangeDutyCycle(100)
-            pwmIn4.ChangeDutyCycle(60)
         elif(error == -1):
+            pwmIn3.ChangeDutyCycle(0)
+            pwmIn2.ChangeDutyCycle(0)
             pwmIn1.ChangeDutyCycle(100)
-            pwmIn4.ChangeDutyCycle(85)
+            pwmIn4.ChangeDutyCycle(50)
         elif(error == 0):
-            pwmIn1.ChangeDutyCycle(100)
-            pwmIn4.ChangeDutyCycle(100)
+            pwmIn2.ChangeDutyCycle(0)
+            pwmIn3.ChangeDutyCycle(0)
+            pwmIn1.ChangeDutyCycle(90)
+            pwmIn4.ChangeDutyCycle(90)
         elif(error == 1):
-            pwmIn1.ChangeDutyCycle(85)
+            pwmIn2.ChangeDutyCycle(0)
+            pwmIn3.ChangeDutyCycle(0)
+            pwmIn1.ChangeDutyCycle(50)
             pwmIn4.ChangeDutyCycle(100)
         elif(error == 2):
-            pwmIn1.ChangeDutyCycle(60)
-            pwmIn4.ChangeDutyCycle(100)
-        elif(error == 3):
+            pwmIn2.ChangeDutyCycle(0)
+            pwmIn3.ChangeDutyCycle(0)
             pwmIn1.ChangeDutyCycle(30)
             pwmIn4.ChangeDutyCycle(100)
+        elif(error == 3):
+            pwmIn1.ChangeDutyCycle(0)
+            pwmIn3.ChangeDutyCycle(0)
+            pwmIn2.ChangeDutyCycle(80)
+            pwmIn4.ChangeDutyCycle(100)
         elif(error == 4):
-            pwmIn1.ChangeDutyCycle(10)
+            pwmIn1.ChangeDutyCycle(0)
+            pwmIn3.ChangeDutyCycle(0)
+            pwmIn2.ChangeDutyCycle(100)
             pwmIn4.ChangeDutyCycle(100)
         #print(error)
 def lerSensores():
