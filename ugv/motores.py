@@ -27,7 +27,7 @@ def virar(direcao):
     if direcao == "direita":
         pwmIn2.ChangeDutyCycle(100)
         pwmIn4.ChangeDutyCycle(100)
-        time.sleep(1.8)
+        time.sleep(1.3)
         pwmIn2.ChangeDutyCycle(0)
         pwmIn1.ChangeDutyCycle(100)
         pwmIn4.ChangeDutyCycle(100)
@@ -40,7 +40,7 @@ def virar(direcao):
     elif direcao == "esquerda":
         pwmIn1.ChangeDutyCycle(100)
         pwmIn3.ChangeDutyCycle(100)
-        time.sleep(1.8)
+        time.sleep(1.3)
         pwmIn3.ChangeDutyCycle(0)
         pwmIn1.ChangeDutyCycle(100)
         pwmIn4.ChangeDutyCycle(100)

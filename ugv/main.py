@@ -50,7 +50,7 @@ def converte(path):
 
 path = (graph.dijkstra("a", "d"))
 print('Indo de %s para %s' % (path[0], path[(len(path)-1)]))
-print('Por '.join(path))
+print('Por {0}'.format(path))
 path_limpo = converte(path)
 y = 0
 ponto_atual = path[y]
@@ -105,8 +105,9 @@ while True:
     if direcao == 'chegou':
         print("Estacao %s alcancada" % (path[y]))
         y = y + 1
-        ponto_atual = path[y]
+        try:
+            ponto_atual = path[y]
+        except:
+            print("Destino encontrado")
+            sys.exit(1)
 
-        if (y > len(path)): 
-            print('Destino alcancado')
-            break
