@@ -114,7 +114,6 @@ def main(name, img1, img2):
     #print('img1 - %d features, img2 - %d features' % (len(kp1), len(kp2)))
 
     def match_and_draw():
-        #print('matching...')
         raw_matches = matcher.knnMatch(desc1, trainDescriptors = desc2, k = 2) #2
         p1, p2 = findObj.filter_matches(kp1, kp2, raw_matches)
         if len(p1) >= 6:
