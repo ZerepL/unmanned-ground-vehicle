@@ -37,6 +37,15 @@ def virar(direcao):
         pwmIn2.ChangeDutyCycle(0)
         pwmIn4.ChangeDutyCycle(0)
 
+    if direcao == "direita fino":
+        pwmIn2.ChangeDutyCycle(100)
+        pwmIn4.ChangeDutyCycle(100)
+        time.sleep(0.2)
+        pwmIn1.ChangeDutyCycle(0)
+        pwmIn4.ChangeDutyCycle(0)
+        pwmIn2.ChangeDutyCycle(0)
+        pwmIn4.ChangeDutyCycle(0)
+
     elif direcao == "esquerda":
         pwmIn1.ChangeDutyCycle(100)
         pwmIn3.ChangeDutyCycle(100)
@@ -45,6 +54,14 @@ def virar(direcao):
         pwmIn1.ChangeDutyCycle(100)
         pwmIn4.ChangeDutyCycle(100)
         time.sleep(1)        
+        pwmIn1.ChangeDutyCycle(0)
+        pwmIn3.ChangeDutyCycle(0)
+        pwmIn4.ChangeDutyCycle(0)
+
+    elif direcao == "esquerda fino":
+        pwmIn1.ChangeDutyCycle(100)
+        pwmIn3.ChangeDutyCycle(100)
+        time.sleep(0.1)      
         pwmIn1.ChangeDutyCycle(0)
         pwmIn3.ChangeDutyCycle(0)
         pwmIn4.ChangeDutyCycle(0)

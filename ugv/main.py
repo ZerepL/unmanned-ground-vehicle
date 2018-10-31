@@ -69,6 +69,7 @@ print('Por {0}'.format(path))
 path_limpo = converte(path)
 y = 0
 ponto_atual = path[y]
+falha = 0
 
 while True:
     print('Lendo linhas')
@@ -80,48 +81,61 @@ while True:
     busca = find.main('sift', path_limpo[y], img2)
     if busca[0][0] == -999:
         print("Nada encontrado")
-
-        sys.exit(1)
+        falha = falha + 1
     else:
         print("Padrao encontrado")
         print(busca)
         crop_img = img2[busca[0][1]:busca[2][1], busca[0][0]:busca[2][0]]
-
+        falha = 0
     busca[0][0] = -999
     direcao = ''
     x = 0
     print('Buscando direcao')
-    while(busca[0][0] == -999):
+    while(busca[0][0] == -999 and falha == 0):
 
         if(x == 0):
             busca = find.main('sift', chegou, crop_img)
             x = 1
             direcao = 'chegou'
+            falha = 0
         elif (x == 1):
             busca = find.main('sift', direita, crop_img)
             x = 2
             direcao = 'direita'
+            falha = 0
         elif (x == 2):
             busca = find.main('sift', esquerda, crop_img)
             x = 3
             direcao = 'esquerda'
+            falha = 0
         elif (x == 3):
             busca = find.main('sift', frente, crop_img)
             x = 4
-            direcao = 'frente'            
+            direcao = 'frente'
+            falha = 0          
         elif (x == 4):
             print('Direcao nao encontrada')
             direcao = 'nada'
-            motores.virar(direcao)
-            x = 0
-    motores.virar(direcao)
-    print('Direcao encontrada: {0}'.format(direcao))
-    print(path_limpo[y])
-    if direcao == 'chegou':
-        print("Estacao %s alcancada" % (path[y]))
-        y = y + 1
-        try:
-            ponto_atual = path[y]
-        except:
-            print("Destino encontrado")
-            sys.exit(1)
+            falha = falha + 1
+    
+    if (falha == 0):
+        motores.virar(direcao)
+        print('Direcao encontrada: {0}'.format(direcao))
+        print(path_limpo[y])
+        if direcao == 'chegou':
+            print("Estacao %s alcancada" % (path[y]))
+            y = y + 1
+            try:
+                ponto_atual = path[y]
+            except:
+                print("Destino encontrado")
+                sys.exit(1)
+    elif (falha == 1):
+        motores.virar('nada')
+    elif (falha == 2):
+        motores.virar('esquerda fino')
+    elif (falha == 3):
+        motores.virar('direita fino')
+    elif (falha == 4):
+        print("Falha de leitura - PARANDO")
+        sys.exit(1)
