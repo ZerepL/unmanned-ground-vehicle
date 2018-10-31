@@ -1,146 +1,38 @@
 Indo de a para d
-Por a c b d
+Por deque(['a', 'c', 'b', 'd'])
 Lendo linhas
 Tirando foto
-a
-7 / 9  inliers/matched
+Buscando por: a
+10 / 14  inliers/matched
 Padrao encontrado
-[[217  36]
- [373  50]
- [375 116]
- [213 146]]
+[[174   5]
+ [349   2]
+ [354  92]
+ [165 101]]
 Buscando direcao
-12 / 23  inliers/matched
-a
-[[126 125 121 ... 123 122 122]
- [123 123 121 ... 123 123 122]
- [124 123 124 ... 123 123 123]
- ...
- [114 114 114 ... 115 115 115]
- [114 114 114 ... 116 115 115]
- [114 114 114 ... 116 115 115]]
+7 / 17  inliers/matched
+Direcao encontrada: chegou
 Estacao a alcancada
 Lendo linhas
 Tirando foto
-c
-15 / 20  inliers/matched
+Buscando por: c
+10 / 17  inliers/matched
 Padrao encontrado
-[[223 180]
- [413 191]
- [413 288]
- [217 294]]
+[[155 161]
+ [349 166]
+ [350 269]
+ [145 277]]
 Buscando direcao
 0 matches found, not enough for homography estimation
-1 matches found, not enough for homography estimation
+Direcao encontrada: chegou
 0 matches found, not enough for homography estimation
-21 / 21  inliers/matched
-c
-[[107 108 108 ... 105 103 104]
- [102 105 104 ... 104 101 102]
- [109 106  90 ... 104 103 100]
- ...
- [109 109 109 ... 107 107 107]
- [109 109 109 ... 107 107 107]
- [110 110 109 ... 107 107 107]]
+Direcao encontrada: direita
+5 matches found, not enough for homography estimation
+Direcao encontrada: esquerda
+23 / 24  inliers/matched
+Direcao encontrada: frente
 Lendo linhas
 Tirando foto
-c
-8 / 11  inliers/matched
-Padrao encontrado
-[[230  69]
- [372  76]
- [374 153]
- [216 154]]
-Buscando direcao
-14 / 27  inliers/matched
-c
-[[107 108 108 ... 105 103 104]
- [102 105 104 ... 104 101 102]
- [109 106  90 ... 104 103 100]
- ...
- [109 109 109 ... 107 107 107]
- [109 109 109 ... 107 107 107]
- [110 110 109 ... 107 107 107]]
-Estacao c alcancada
-Lendo linhas
-Tirando foto
-b
-12 / 15  inliers/matched
-Padrao encontrado
-[[212 213]
- [375 220]
- [377 308]
- [206 314]]
-Buscando direcao
-0 matches found, not enough for homography estimation
-12 / 19  inliers/matched
-b
-[[118 118 120 ... 114 114 116]
- [122 122 122 ... 115 115 115]
- [117 118 118 ... 117 117 116]
- ...
- [111 112 113 ... 113 115 118]
- [111 112 113 ... 117 115 113]
- [111 112 113 ... 114 114 113]]
-Lendo linhas
-Tirando foto
-b
-7 / 9  inliers/matched
-Padrao encontrado
-[[-1061  -609]
- [  360   248]
- [  366   230]
- [  360   278]]
-Buscando direcao
-0 / 10  inliers/matched
-b
-[[118 118 120 ... 114 114 116]
- [122 122 122 ... 115 115 115]
- [117 118 118 ... 117 117 116]
- ...
- [111 112 113 ... 113 115 118]
- [111 112 113 ... 117 115 113]
- [111 112 113 ... 114 114 113]]
-Estacao b alcancada
-Lendo linhas
-Tirando foto
-d
-10 / 15  inliers/matched
-Padrao encontrado
-[[280 216]
- [459 223]
- [453 317]
- [280 319]]
-Buscando direcao
-3 matches found, not enough for homography estimation
-3 matches found, not enough for homography estimation
-13 / 13  inliers/matched
-d
-[[113 115 117 ... 117 116 114]
- [116 116 116 ... 115 115 116]
- [116 117 117 ... 116 114 114]
- ...
- [109 109 109 ... 110 109 110]
- [109 108 108 ... 109 110 112]
- [109 108 108 ... 108 111 113]]
-Lendo linhas
-Tirando foto
-d
-12 / 14  inliers/matched
-Padrao encontrado
-[[210 124]
- [440 136]
- [441 251]
- [206 269]]
-Buscando direcao
-13 / 31  inliers/matched
-d
-[[113 115 117 ... 117 116 114]
- [116 116 116 ... 115 115 116]
- [116 117 117 ... 116 114 114]
- ...
- [109 109 109 ... 110 109 110]
- [109 108 108 ... 109 110 112]
- [109 108 108 ... 108 111 113]]
-Estacao d alcancada
-Destino encontrado
+Buscando por: c
+4 matches found, not enough for homography estimation
+Nada encontrado

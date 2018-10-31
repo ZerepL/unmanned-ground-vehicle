@@ -76,7 +76,7 @@ while True:
     print('Tirando foto')
     picExt = cam.tirafoto()
     img2 = cv.cvtColor(picExt, cv.COLOR_BGR2GRAY)
-    print(path[y])
+    print('Buscando por: {0}'.format(path[y]))
     busca = find.main('sift', path_limpo[y], img2)
     if busca[0][0] == -999:
         print("Nada encontrado")
@@ -108,14 +108,14 @@ while True:
         elif (x == 3):
             busca = find.main('sift', frente, crop_img)
             x = 4
-            direcao = 'frente'
+            direcao = 'frente'            
         elif (x == 4):
             print('Direcao nao encontrada')
             direcao = 'nada'
             motores.virar(direcao)
             x = 0
     motores.virar(direcao)
-    print(ponto_atual)
+    print('Direcao encontrada: {0}'.format(direcao))
     print(path_limpo[y])
     if direcao == 'chegou':
         print("Estacao %s alcancada" % (path[y]))
