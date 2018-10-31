@@ -1,6 +1,7 @@
 import RPi.GPIO as io
 import time
 
+
 io.setwarnings(False)
 
 io.setmode (io.BOARD)
@@ -37,13 +38,13 @@ def virar(direcao):
         pwmIn2.ChangeDutyCycle(0)
         pwmIn4.ChangeDutyCycle(0)
 
-    if direcao == "direita fino":
+    elif direcao == "direita fino":
         pwmIn2.ChangeDutyCycle(100)
         pwmIn4.ChangeDutyCycle(100)
         time.sleep(0.2)
         pwmIn1.ChangeDutyCycle(0)
-        pwmIn4.ChangeDutyCycle(0)
         pwmIn2.ChangeDutyCycle(0)
+        pwmIn3.ChangeDutyCycle(0)
         pwmIn4.ChangeDutyCycle(0)
 
     elif direcao == "esquerda":
@@ -63,6 +64,7 @@ def virar(direcao):
         pwmIn3.ChangeDutyCycle(100)
         time.sleep(0.1)      
         pwmIn1.ChangeDutyCycle(0)
+        pwmIn2.ChangeDutyCycle(0)
         pwmIn3.ChangeDutyCycle(0)
         pwmIn4.ChangeDutyCycle(0)
 
