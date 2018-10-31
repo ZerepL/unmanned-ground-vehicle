@@ -36,6 +36,19 @@ frente = cv.imread(frente, 0)
 
 
 def converte(path):
+    ''' Converte os nomes de cada node para a imagem lida
+    pelo opencv.
+
+    Input = {
+        "a", "b", "c" ...
+    }
+    Type = str
+
+    Output = {
+        baseA, baseB, baseC ...
+    }
+    Type = numpy.ndarray
+    '''
     path_refinado = []
     for item in path:
         if item == "a":

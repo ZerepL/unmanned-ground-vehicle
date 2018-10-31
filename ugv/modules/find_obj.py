@@ -17,11 +17,12 @@ import numpy as np
 import cv2 as cv
 import sys
 
+
 class findObj():
-    '''Classe que encontra informacoes sobre a localizacao de uim objeto'''
+    '''Classe que encontra informacoes sobre a localizacao de um objeto'''
     def init_feature(name):
         '''Inicializa a classe quanto aos argumentos'''
-        
+
         flann_index_kdtree = 1  # bug: flann enums are missing
         flann_index_lsh = 6
 
@@ -59,7 +60,6 @@ class findObj():
             matcher = cv.BFMatcher(norm)
         return detector, matcher
 
-
     def filter_matches(kp1, kp2, matches, ratio=0.75):
         '''Aplica filtros para localizacao'''
         mkp1, mkp2 = [], []
@@ -90,6 +90,7 @@ class findObj():
 
         return limpo
 
+
 def main(name, img1, img2):
     '''Prepara variaveis e valores'''
     null = np.int32([[0, 0], [0, 0]])
@@ -111,10 +112,9 @@ def main(name, img1, img2):
     kp1, desc1 = detector.detectAndCompute(img1, None)
     kp2, desc2 = detector.detectAndCompute(img2, None)
     null[0][0] = -999
-    #print('img1 - %d features, img2 - %d features' % (len(kp1), len(kp2)))
 
     def match_and_draw():
-        raw_matches = matcher.knnMatch(desc1, trainDescriptors = desc2, k = 2) #2
+        raw_matches = matcher.knnMatch(desc1, trainDescriptors=desc2, k=2)
         p1, p2 = findObj.filter_matches(kp1, kp2, raw_matches)
         if len(p1) >= 6:
             H, status = cv.findHomography(p1, p2, cv.RANSAC, 5.0)
@@ -124,6 +124,5 @@ def main(name, img1, img2):
             print('%d matches found, not enough for homography estimation' % len(p1))
             return null
         return findObj.extracao(img1, H)
-
 
     return match_and_draw()
