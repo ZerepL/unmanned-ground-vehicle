@@ -1,0 +1,3 @@
+*.pyc
+ugv/__pycache__
+ugv/.vscode
