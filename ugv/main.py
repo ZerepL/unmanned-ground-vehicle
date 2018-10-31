@@ -1,22 +1,22 @@
-import find_obj
 import sys
 import cv2 as cv
-import camera
-import motores
-import dijsktra
 import numpy as np
+from modules import find_obj
+from modules import camera
+from modules import motores
+from modules import dijsktra
 
 find = find_obj
 cam = camera
 
-baseA = './baseA.jpg'
-baseB = './baseB.jpg'
-baseC = './baseC.jpg'
-baseD = './baseD.jpg'
-esquerda = './esquerda.jpg'
-direita = './direita.jpg'
-chegou = './chegou.jpg'
-frente = './frente.jpg'
+baseA = './imagens/baseA.jpg'
+baseB = './imagens/baseB.jpg'
+baseC = './imagens/baseC.jpg'
+baseD = './imagens/baseD.jpg'
+esquerda = './imagens/esquerda.jpg'
+direita = './imagens/direita.jpg'
+chegou = './imagens/chegou.jpg'
+frente = './imagens/frente.jpg'
 
 graph = dijsktra.Graph([])
 graph.add_edge("a", "c", 1)
@@ -34,6 +34,7 @@ direita = cv.imread(direita, 0)
 chegou = cv.imread(chegou, 0)
 frente = cv.imread(frente, 0)
 
+
 def converte(path):
     path_refinado = []
     for item in path:
@@ -45,8 +46,9 @@ def converte(path):
             path_refinado.append(baseC)
         elif item == "d":
             path_refinado.append(baseD)
-    
+
     return path_refinado
+
 
 path = (graph.dijkstra("a", "d"))
 print('Indo de %s para %s' % (path[0], path[(len(path)-1)]))
@@ -62,11 +64,11 @@ while True:
     picExt = cam.tirafoto()
     img2 = cv.cvtColor(picExt, cv.COLOR_BGR2GRAY)
     print(path[y])
-    busca = find.main('sift', path_limpo[y], img2) # <-------------------
+    busca = find.main('sift', path_limpo[y], img2)
     if busca[0][0] == -999:
         print("Nada encontrado")
 
-        sys.exit(1) 
+        sys.exit(1)
     else:
         print("Padrao encontrado")
         print(busca)
@@ -110,4 +112,3 @@ while True:
         except:
             print("Destino encontrado")
             sys.exit(1)
-
