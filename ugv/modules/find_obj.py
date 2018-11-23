@@ -13,14 +13,14 @@ USAGE
 # Python 2/3 compatibility
 from __future__ import print_function
 
+import sys
 import numpy as np
 import cv2 as cv
-import sys
 
 
-class findObj():
+class FindObj():
     '''Classe que encontra informacoes sobre a localizacao de um objeto'''
-    def init_feature(name):
+    def init_feature(self, name):
         '''Inicializa a classe quanto aos argumentos'''
 
         flann_index_kdtree = 1  # bug: flann enums are missing
@@ -55,12 +55,13 @@ class findObj():
                     key_size=12,     # 20
                     multi_probe_level=1
                 ) #2
-            matcher = cv.FlannBasedMatcher(flann_params, {})  # bug : need to pass empty dict (#1329)
+            matcher = cv.FlannBasedMatcher(flann_params, {})
+            # bug : need to pass empty dict (#1329)
         else:
             matcher = cv.BFMatcher(norm)
         return detector, matcher
 
-    def filter_matches(kp1, kp2, matches, ratio=0.75):
+    def filter_matches(self, kp1, kp2, matches, ratio=0.75):
         '''Aplica filtros para localizacao'''
         mkp1, mkp2 = [], []
         for item in matches:
@@ -72,15 +73,14 @@ class findObj():
         point2 = np.float32([kp.pt for kp in mkp2])
         return point1, point2
 
-    def extracao(img1, high=None):
+    def extracao(self, img1, high=None):
         '''Extrai as coordenadas do objeto'''
         height, width = img1.shape[:2]
         limpo = np.int32([[0, 0], [0, 0]])
-        limpoinfo = np.int32([[0, 0], [0, 0]])
         if high is not None:
             corners = np.float32([[0, 0], [width, 0], [width, height], [0, height]])
             corners = np.int32(
-                cv.perspectiveTransform(corners.reshape(1, -1, 2), high).reshape(-1, 2) + (width, 0) 
+                cv.perspectiveTransform(corners.reshape(1, -1, 2), high).reshape(-1, 2) + (width, 0)
             )
             limpo = corners
             limpo[0][0] = limpo[0][0] - width
@@ -94,7 +94,7 @@ class findObj():
 def main(name, img1, img2):
     '''Prepara variaveis e valores'''
     null = np.int32([[0, 0], [0, 0]])
-    detector, matcher = findObj.init_feature(name)
+    detector, matcher = FindObj.init_feature(name)
 
     # if img1 is None:
     #     print('Find_obj=Failed to load fn1:', img1)
@@ -105,17 +105,17 @@ def main(name, img1, img2):
     #     sys.exit(1)
 
     if detector is None:
-        print('find_obj=unknown feature:', name)
+        print('Find_obj=unknown feature:', name)
         sys.exit(1)
-
 
     kp1, desc1 = detector.detectAndCompute(img1, None)
     kp2, desc2 = detector.detectAndCompute(img2, None)
     null[0][0] = -999
 
     def match_and_draw():
+        '''Encontra os pontos para extracao da imagem'''
         raw_matches = matcher.knnMatch(desc1, trainDescriptors=desc2, k=2)
-        p1, p2 = findObj.filter_matches(kp1, kp2, raw_matches)
+        p1, p2 = FindObj.filter_matches(kp1, kp2, raw_matches)
         if len(p1) >= 6:
             H, status = cv.findHomography(p1, p2, cv.RANSAC, 5.0)
             print('%d / %d  inliers/matched' % (np.sum(status), len(status)))
@@ -123,6 +123,6 @@ def main(name, img1, img2):
             H, status = None, None
             print('%d matches found, not enough for homography estimation' % len(p1))
             return null
-        return findObj.extracao(img1, H)
+        return FindObj.extracao(img1, H)
 
     return match_and_draw()

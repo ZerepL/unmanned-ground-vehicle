@@ -1,29 +1,28 @@
-# import the necessary packages
+'''Modulo responsavel pela camera'''
+import time
 from picamera.array import PiRGBArray
 from picamera import PiCamera
-import time
- 
-# initialize the camera and grab a reference to the raw camera capture
-camera = PiCamera()
-camera.resolution = (640, 480)
-camera.framerate = 32
-rawCapture = PiRGBArray(camera, size=(640, 480))
- 
-# allow the camera to warmup
+
+
+CAMERA = PiCamera()
+CAMERA.resolution = (640, 480)
+CAMERA.framerate = 32
+RAWCAPTURE = PiRGBArray(CAMERA, size=(640, 480))
 time.sleep(0.2)
 
-def tirafoto():
-           
-    camera.capture(rawCapture, format="bgr")
-    image = rawCapture.array
-    rawCapture.truncate(0)
+
+def tira_foto():
+    '''Tira e retorna uma unica foto em formato brg'''
+    CAMERA.capture(RAWCAPTURE, format="bgr")
+    image = RAWCAPTURE.array
+    RAWCAPTURE.truncate(0)
     return image
 
-def salvarFoto():
-    camera.start_preview()
+
+def salvar_foto():
+    '''Funcao para salvar imagens direto na memoria do rasp
+    Usado para criar representacoes de simbolos padroes no sistema interno'''
+    CAMERA.start_preview()
     time.sleep(20)
-    camera.capture("foto.jpg", resize=(1080,720)) 
-    camera.stop_preview()
-
-
-
+    CAMERA.capture("foto.jpg", resize=(1080, 720))
+    CAMERA.stop_preview()
