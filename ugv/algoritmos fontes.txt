@@ -1,2 +1,0 @@
-https://dev.to/mxl/dijkstras-algorithm-in-python-algorithms-for-beginners-dkc
-https://github.com/opencv/opencv/blob/master/samples/python/find_obj.py
