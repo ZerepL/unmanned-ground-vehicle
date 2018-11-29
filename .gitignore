@@ -4,3 +4,4 @@ ugv/.vscode
 .vscode
 .mypy_cache
 ugv/venv
+venv
